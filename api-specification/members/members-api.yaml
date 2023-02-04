@@ -1,0 +1,147 @@
+openapi: 3.0.3
+info:
+  title: Member Management API
+  description: |-
+    This is a Library Management system based on the OpenAPI 3.0 specification.  
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: chinthakarukshan@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://localhost:8080
+tags:
+  - name: members
+    description: Operations on Library members
+paths:
+  /members:
+    post:
+      tags:
+        - members
+      summary: Add member to the library
+      description: Add a new member to the LBMS
+      operationId: addMember
+      requestBody:
+        description: Create a new member in the library management system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberRequest'
+        required: true
+      responses:
+        '201':
+          description: Member Created
+        '400':
+          description: invalid input, object invalid
+    
+    get:
+      tags:
+        - members
+      summary: Get list of members
+      description: Returns a list of members in the library management system
+      operationId: getMembers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MemberSummaryResponse'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MemberSummaryResponse' 
+  /members/{memberId}:
+    get:
+      tags:
+        - members
+      summary: Find member by ID
+      description: Returns the details of the member
+      operationId: getMemberById
+      parameters:
+        - name: memberId
+          in: path
+          description: ID of member to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberDetailResponse'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MemberDetailResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Member not found
+      
+components:
+  schemas:
+    MemberRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: member@domain.com
+        firstName:
+          type: string
+          example: Chinthaka
+        lastName:
+          type: string
+          example: Weerakkody
+        dateOfBirth:
+          type: string
+          format: date-time
+      xml:
+        name: memberrequest
+    MemberSummaryResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 26f0449e-fb90-481e-b4b0-96ecf5fa665a
+        email:
+          type: string
+          format: email
+          example: member@domain.com
+        firstName:
+          type: string
+          example: Chinthaka
+        lastName:
+          type: string
+          example: Weerakkody
+      xml:
+        name: MemberSummaryResponse
+    MemberDetailResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 26f0449e-fb90-481e-b4b0-96ecf5fa665a
+        email:
+          type: string
+          format: email
+          example: member@domain.com
+        firstName:
+          type: string
+          example: Chinthaka
+        lastName:
+          type: string
+          example: Weerakkody
+        dateOfBirth:
+          type: string
+          format: date-time
+      xml:
+        name: MemberDetailResponse
