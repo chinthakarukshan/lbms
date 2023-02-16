@@ -85,7 +85,32 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Member not found
-      
+    patch:
+      tags:
+        - members
+      summary: Patch member in the library management system
+      description: Update Members in the system
+      operationId: patchMember
+      parameters:
+        - name: memberId
+          in: path
+          description: ID of member to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new member in the library management system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully completed.
+        '400':
+          description: invalid input, object invalid
 components:
   schemas:
     MemberRequest:
@@ -145,3 +170,21 @@ components:
           format: date-time
       xml:
         name: MemberDetailResponse
+    MemberUpdateRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: member@domain.com
+        firstName:
+          type: string
+          example: Chinthaka
+        lastName:
+          type: string
+          example: Weerakkody
+        dateOfBirth:
+          type: string
+          format: date-time
+      xml:
+        name: memberupdateRequest
