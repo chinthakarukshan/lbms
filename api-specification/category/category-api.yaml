@@ -1,0 +1,180 @@
+openapi: 3.0.3
+info:
+  title: Category Management API
+  description: |-
+    This is a Library Management system based on the OpenAPI 3.0 specification.  
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: chinthakarukshan@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://localhost:8080
+tags:
+  - name: category
+    description: Operations on Book Category
+paths:
+  /category:
+    post:
+      tags:
+        - category
+      summary: Add category to the library
+      description: Add a new category to the LBMS
+      operationId: addCategory
+      requestBody:
+        description: Create a new category in the library management system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Book Category Created
+        '400':
+          description: invalid input, object invalid
+    
+    get:
+      tags:
+        - category
+      summary: Get list of categories
+      description: Returns a list of book categories in the library management system
+      operationId: getCategory
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategorySummaryResponse'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategorySummaryResponse' 
+  /category/{categoryId}:
+    get:
+      tags:
+        - category
+      summary: Find category by ID
+      description: Returns the details of the category
+      operationId: getCategoryById
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of category to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDetailResponse'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CategoryDetailResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Category not found
+    patch:
+      tags:
+        - category
+      summary: Patch category in the library management system
+      description: Update Category in the system
+      operationId: patchCategory
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of category to patch
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Patch a category in the library management system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully completed.
+        '400':
+          description: invalid input, object invalid
+components:
+  schemas:
+    CategoryCreateRequest:
+      type: object
+      properties:
+        category:
+          type: string
+          example: Novel
+        Description:
+          type: string
+          example: Novel Category
+      xml:
+        name: CategoryCreateRequest
+    CategorySummaryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 26f0449e-fb90-481e-b4b0-96ecf5fa665a
+        category:
+          type: string
+          example: Novel
+        status:
+          type: string
+          example: active
+        createDate:
+          type: string
+          example: date-time
+      xml:
+        name: CategorySummaryResponse
+    CategoryDetailResponse:
+      type: object
+      properties:
+        Id:
+          type: string
+          example: 26f0449e-fb90-481e-b4b0-96ecf5fa665a
+        category:
+          type: string
+          example: Novel
+        description:
+          type: string
+          example: Novel Category
+        status:
+          type: string
+          example: active
+        createdBy:
+          type: string
+          example: chinthaka
+        createdDate:
+          type: string
+          format: date-time
+      xml:
+        name: CategoryDetailResponse
+    CategoryUpdateRequest:
+      type: object
+      properties:
+        category:
+          type: string
+          example: Novel
+        description:
+          type: string
+          example: Novel Category
+        status:
+          type: string
+          example: active
+      xml:
+        name: CategoryUpdateRequest
