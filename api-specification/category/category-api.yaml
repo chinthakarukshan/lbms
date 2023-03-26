@@ -162,6 +162,12 @@ components:
         createdDate:
           type: string
           format: date-time
+        updatedBy:
+          type: string
+          example: chinthaka
+        updatedDate:
+          type: string
+          format: date-time
       xml:
         name: CategoryDetailResponse
     CategoryUpdateRequest:
