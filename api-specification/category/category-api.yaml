@@ -173,12 +173,6 @@ components:
     CategoryUpdateRequest:
       type: object
       properties:
-        category:
-          type: string
-          example: Novel
-        description:
-          type: string
-          example: Novel Category
         status:
           type: string
           example: active
