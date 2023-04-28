@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: Author Management API
+  description: |-
+    This is a Library Management system based on the OpenAPI 3.0 specification.  
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: chinthakarukshan@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: https://localhost:8080
+tags:
+  - name: author
+    description: Operations on Author management
+paths:
+  /author:
+    post:
+      tags:
+        - author
+      summary: Add author to the library
+      description: Add a new author to the LBMS
+      operationId: addAuthor
+      requestBody:
+        description: Create a new author in the library management system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Author Created
+        '400':
+          description: invalid input, object invalid
+    
+components:
+  schemas:
+    AuthorCreateRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Kumarathunga
+        lastName:
+          type: string
+          example: Minidasa
+      xml:
+        name: AuthorCreateRequest
+    
