@@ -35,12 +35,46 @@ paths:
           description: Author Created
         '400':
           description: invalid input, object invalid
+    get:
+      tags:
+        - author
+      summary: Get list of Authors
+      description: Returns a list of Authors in the library management system
+      operationId: getAuthor
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorSummaryResponse'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorSummaryResponse'
     
 components:
   schemas:
     AuthorCreateRequest:
       type: object
       properties:
+        firstName:
+          type: string
+          example: Kumarathunga
+        lastName:
+          type: string
+          example: Minidasa
+      xml:
+        name: AuthorCreateRequest
+    AuthorSummaryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 26f0449e-fb90-481e-b4b0-96ecf5fa665a
         firstName:
           type: string
           example: Kumarathunga
